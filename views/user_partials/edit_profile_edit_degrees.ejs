@@ -1,0 +1,117 @@
+<li class="list-group-item">
+	<strong>Education:</strong> 
+	<% if(locals.user.degrees.length > 0 ){ %>
+	<% user.degrees.forEach(function(degree,index){ %>
+			<div class="panel panel-default">
+				<form class="form-inline" action="/users/<%= user.permalink %>/edit_profile/edit_delete_degree">
+					<div class="panel-body">
+					
+						<input type="hidden" name="index" value=<%= index %> />
+
+						<div class="form-group col-sm-4">
+							<label> Degree Type: </label>
+							<span id="edit_degree_degreeType_<%= index %>">
+								 <%=  degree.degree_type %>
+							</span>
+							<input type="text" placeholder="<%= degree.degree_type %>" id="edit_degree_degreeType_text_<%= index %>" class="form-control hide" name="edit_degree_degreeType"/>
+						</div>
+
+						<div class="form-group col-sm-4">
+							<label> Subject: </label>
+							<span id="edit_degree_subject_<%= index %>">
+								 <%=  degree.subject %>
+							</span>
+							<input type="text" placeholder="<%= degree.subject %>" id="edit_degree_subject_text_<%= index %>" class="form-control hide" name="edit_degree_subject"/>
+						</div>
+
+						<div class="form-group col-sm-4">
+							<label> Institution: </label>
+							<span id="edit_degree_institution_<%= index %>">
+								 <%=  degree.institution %>
+							</span>
+							<input type="text" placeholder="<%= degree.institution %>" id="edit_degree_institution_text_<%= index %>" class="form-control hide" name="edit_degree_institution"/>
+						</div>
+
+
+						<br><br>
+
+						<div class="form-group col-sm-4">
+							<label> Year: </label>
+							<span id="edit_degree_graduatedYear_<%= index %>">
+								 <%=  degree.graduated_year %>
+							</span>
+							<input type="number" placeholder="<%= degree.graduated_year %>" id="edit_degree_graduatedYear_text_<%= index %>" class="form-control hide" name="edit_degree_graduatedYear"/>
+						</div>
+						<div class="form-group col-sm-4">
+							<label> Month: </label>
+							<span id="edit_degree_graduatedMonth_<%= index %>">
+								 <%=  degree.graduated_month %>
+							</span>
+							<input type="number" placeholder="<%= degree.graduated_month %>" id="edit_degree_graduatedMonth_text_<%= index %>" class="form-control hide" name="edit_degree_graduatedMonth"/>
+						</div>
+						<div class="form-group col-sm-4">
+							<label> Date: </label>
+							<span id="edit_degree_graduatedDay_<%= index %>">
+								 <%=  degree.graduated_day %>
+							</span>
+							<input type="number" placeholder="<%= degree.graduated_day %>" id="edit_degree_graduatedDay_text_<%= index %>" class="form-control hide " name="edit_degree_graduatedDay"/>
+						</div>	
+						<button id="degree_edit_<%= index%>" type="button" class="degree_edit btn btn-warning btn-sm round pull-right" value="<%= index %>">
+							Edit
+						</button>
+						<button id="degree_delete_<%= index %>" type="submit" class="btn btn-danger btn-sm round pull-right" name="degree" value="delete">
+							Delete
+						</button>
+						<button id="edit_degree_submit_<%= index %>" type="submit" class="btn btn-primary btn-sm round pull-right hide" name="degree" value="submit">
+							Submit
+						</button>
+						<button id="edit_degree_cancel" type="button" class="edit_degree_cancel btn btn-warning btn-sm round pull-right hide" value="<%= index%>">
+							Cancel
+						</button>
+						
+					</div>
+				</form>
+			</div>
+		<% }); %>							
+	<%}%>
+	<form class="form-inline" action="/users/<%= user.permalink %>/edit_profile/add_degree">
+		<div class="panel panel-default panel-body">
+			<div id="add_degree_div" class="hide">
+			<div id="add_degree__degreeType_div" class="form-group">
+				<label for="add_degreeType">Degree Type:</label>
+				<input type="text" placeholder="Enter Degree Type"  class=" form-control" id="add_degreeType" name="add_degreeType" required/>
+			</div>
+			<div id="add_subject_div" class="form-group" >
+				<label for="add_subject">Subject:</label>
+				<input type="text" placeholder="Enter Subject" class="form-control" name="add_subject" id="add_subject" />
+			</div>
+			<div id="add_institution_div" class="form-group" >
+				<label for="add_institution">Institution:</label>
+				<input type="text" placeholder="Enter institution" class="form-control" name="add_institution" id="add_institution" />
+			</div>
+			<br><br>
+			<div id="add_graduatedYear_div" class="form-group" >
+				<label for="add_graduatedYear">Year:</label>
+				<input type="number" placeholder="Enter Year" class="form-control" name="add_graduatedYear" id="add_graduatedYear" />
+			</div>
+			<div id="add_graduatedMonth_div" class="form-group" >
+				<label for="add_graduatedMonth">Month:</label>
+				<input type="number" placeholder="Enter Month" class="form-control" name="add_graduatedMonth" id="add_graduatedMonth" />
+			</div>
+			<div id="add_graduatedDay_div" class="form-group" >
+				<label for="add_graduatedDay">Date:</label>
+				<input type="number" placeholder="Enter Date" class="form-control" name="add_graduatedDay" id="add_graduatedDay" />
+			</div>
+			</div>
+			<button id="degree_add" type="button" class="btn btn-success btn-sm round pull-right">
+				Add
+			</button>
+			<button id="add_degree_submit" type="submit" class="btn btn-primary btn-sm round pull-right hide">
+				Submit
+			</button>
+			<button id="add_degree_cancel" type="button" class="add_degree_cancel btn btn-warning btn-sm round pull-right hide">
+				Cancel
+			</button>
+		</div>
+	</form>
+</li>

@@ -1,0 +1,18 @@
+<li class="list-group-item">
+	<form class="form-inline" action="/users/<%= user.permalink %>/edit_profile/edit_overview">
+			<label for="overview_text">Summary:</label> 
+			<span id="overview">
+				<%= user.overview =  typeof user.overview == 'undefined' ? '' : user.overview %>
+			</span>
+			<textarea rows='5' cols="70" placeholder="<%= user.overview %>" id="overview_text" class="form-control hide" name="overview_edit"></textarea>
+			<button id="overview_edit" type="button" class="btn btn-warning btn-sm round pull-right">
+				Edit
+			</button>
+			<button id="overview_submit" type="submit" class="btn btn-primary btn-sm round pull-right hide">
+				Submit
+			</button>
+			<button id="overview_cancel" type="button" class="btn btn-primary btn-sm round pull-right hide">
+				Cancel
+			</button>
+	</form>
+</li>

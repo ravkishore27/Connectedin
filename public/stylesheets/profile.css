@@ -1,0 +1,55 @@
+#header {
+    background-color:#336699;;
+    color:white;
+    text-align:center;
+    padding:5px;
+}
+
+#nav{    
+    line-height:30px;
+    background-color:#eeeeee;
+    height:300px;
+    width:100px;
+    float:left;
+    padding:5px;
+    position:fixed;      
+}
+#section {
+    width:100%;
+    float:left;
+    padding:10px;	 	 
+}
+#footer {
+    background-color:#336699;;
+    color:white;
+    clear:both;
+    text-align:center;
+   padding:5px;	 	 
+}
+
+.avatar{
+    width: 60px;height: 60px;
+    margin: 10px auto 30px;
+    border-radius: 100%;
+    border: 2px solid #aaa;
+    background-size: cover;
+    background-image :url(/images/logo.jpg);
+    position:fixed;
+    left: 15px;
+    top: -6px
+}
+
+.btn-right{
+  position:fixed;
+    right: 15px;
+    top: 20px;
+    z-index: 1000;
+}
+
+.btn-profile-right{
+    
+}
+
+.container.content{
+    margin: 20px 0px 20px 120px;
+}

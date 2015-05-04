@@ -1,0 +1,50 @@
+<li class="list-group-item">
+	<strong>Certificates:</strong> 
+	<% if(locals.user.certificates.length > 0 ){ %>
+		<% user.certificates.forEach(function(certificate,index){ %>
+			<div class="panel panel-default ">
+				<form class="form-inline" action="/users/<%= user.permalink %>/edit_profile/edit_delete_certificate">
+					<div>
+					<li class="list-group-item">
+						<input type="hidden" name="index" value=<%= index%> />
+						<label> Name: </label>
+						<span id="edit_certificate_<%= index %>">
+							 <%=  certificate %>
+						</span>
+						<input type="text" placeholder="<%= certificate %>" id="edit_certificate_text_<%= index %>" class="form-control hide" name="edit_certificate"/>
+						<button id="certificate_edit" type="button" class="certificate_edit btn btn-warning btn-sm round pull-right" value="<%= index %>">
+							Edit
+						</button>
+						<button id="edit_certificate_delete_<%= index %>" type="submit" class="btn btn-danger btn-sm round pull-right" name="certificate" value="delete">
+							Delete
+						</button>
+						<button id="edit_certificate_submit_<%= index %>" type="submit" class="btn btn-primary btn-sm round pull-right hide" name="certificate" value="submit">
+							Submit
+						</button>
+						<button id="edit_certificate_cancel" type="button" class="edit_certificate_cancel btn btn-warning btn-sm round pull-right hide" value="<%= index %>">
+							Cancel
+						</button>
+					</li>
+					</div>
+				</form>
+			</div>
+		<% }); %>							
+	<%}%>
+	<form class="form-inline" action="/users/<%= user.permalink %>/edit_profile/add_certificate">
+		<div class="panel panel-default panel-body">
+			<span id="add_certificate_span" class="hide">
+				<label>Certificate Name:</label>
+				<input type="text" placeholder="Enter certificate Name"  class="form-control" name="add_certificate"/>
+			</span>
+			<button id="certificate_add" type="button" class="btn btn-success btn-sm round pull-right">
+				Add
+			</button>
+			<button id="add_certificate_submit" type="submit" class="btn btn-primary btn-sm round pull-right hide">
+				Submit
+			</button>
+			<button id="add_certificate_cancel" type="button" class="btn btn-warning btn-sm round pull-right hide">
+				Cancel
+			</button>
+		</div>
+	</form>
+</li>

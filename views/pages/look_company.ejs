@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Users Connection</title>
+	<link rel="stylesheet" href="/stylesheets/profile.css">
+	<link rel="stylesheet" href="/stylesheets/edit_user_edit_profile.css">
+	<% include ../partials/head.ejs %>
+</head>
+
+<body>
+	<%if(locals.user){%>
+	<% include ../user_partials/user_header.ejs %>
+	<% include ../user_partials/user_nav.ejs %>
+	<%};if(locals.company){ %>
+	<% include ../company_partials/company_header.ejs %>
+	<% include ../company_partials/company_nav.ejs %>
+	<% } %>
+
+	<div class="container content">
+        <% if (locals.look_company) {%>
+            <div class="panel panel-primary">
+                <!-- Panel Heading -->
+                <div class="panel-heading">
+                    <% if(locals.look_company.name ){ %>
+                        <h3 class="panel-title">Welcome <%= look_company.name %></h3>
+                    <% } %>
+                </div>
+
+                <div class="panel-body  ">
+                    <% if(locals.look_company.permalink ){ %>
+                        <label for="permalink">Permalink:</label>
+                        <span id="permalink"> <%= look_company.permalink %></span>
+
+                        <% if(!locals.company){ %>
+							<% if(user.companies_following.indexOf(look_company.permalink) == -1) {%>
+								<form action="/users/<%=user.permalink%>/companies/<%=look_company.permalink%>/follow">
+									<button class="btn btn-primary pull-right">Follow</button>		
+								</form>
+							<% }else{ %>
+								<form action="/users/<%=user.permalink%>/companies/<%=look_company.permalink%>/unfollow">
+									<button class="btn btn-primary pull-right"> Unfollow</button>		
+								</form>
+							<%}%>							
+						<% } %>
+                    <% } %>
+                </div>
+
+                <!-- Panel Body -->
+                <div class="panel-body">
+                    <p> 
+                        <% if(locals.look_company.description ){ %>
+                            <label>Description:</label> <%= look_company.description %>
+                        <% } %>
+                        
+                        <% if(locals.look_company.overview ){ %>
+                            <label>Overview:</label> <%= look_company.overview %>
+                        <% } %>
+                    </p>
+                </div>
+
+                <!-- look_company details List group -->
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <% if(locals.look_company.homepage_url ){ %>
+                            <label>Homepage URL:</label> <%= look_company.homepage_url %>
+                        <% } %>
+                    </li>
+                    <li class="list-group-item">
+                        <% if(locals.look_company.number_of_employees ){ %>
+                            <label>Number of Employees:</label> <%= look_company.number_of_employees %>
+                        <% } %>
+                    </li>
+                    <li class="list-group-item">
+                        <% if(locals.look_company.email_address ){ %>
+                            <label>Email Address:</label> <%= look_company.email_address %>
+                        <% } %>
+                    </li>
+
+                    <li class="list-group-item">
+                        <% if(locals.look_company.founded_year ){ %>
+                            <label>Founded Year:</label> <%= look_company.founded_year %>
+                        <% } %>
+                    </li>
+
+                    <li class="list-group-item">
+                        <% if(locals.look_company.founded_month ){ %>
+                            <label>Founded Month:</label> <%= look_company.founded_month %>
+                        <% } %>
+                    </li>
+
+                    <li class="list-group-item">
+                        <% if(locals.look_company.founded_day ){ %>
+                            <label>Founded Date:</label> <%= look_company.founded_day %>
+                        <% } %>
+                    </li>
+                   
+                   <li class="list-group-item">
+                        <% if(locals.look_company.phone_number ){ %>
+                            <label>Phone Number:</label> <%= look_company.phone_number %>
+                        <% } %>
+                    </li>
+
+
+                    <% if(locals.look_company.products.length > 0 ){ %>
+                        <li class="list-group-item">
+                            <label>Blog:</label>
+                            <% look_company.products.forEach(function(product, index){ %>
+                                <div class="panel panel-body"><%= index+1 %>.&nbsp;<%= product %></div>
+                            <%});%>
+                        </li>
+                    <% } %>
+
+
+                    <% if(locals.look_company.offices.length > 0 ){ %>
+                        <li class="list-group-item">
+                            <label>Blog:</label>
+                            <% look_company.offices.forEach(function(office, index){ %>
+                                <div class="panel panel-body"><%= index+1 %>.&nbsp;<%= office %></div>
+                            <%});%>
+                        </li>
+                    <% } %>
+
+                      <% if(locals.look_company.following_users.length > 0 ){ %>
+                        <li class="list-group-item">
+                            <label>Following Users:</label>
+                            <% look_company.following_users.forEach(function(permalink, index){ %>
+                                <div class="panel-body"><%= index+1 %>.&nbsp;<%= permalink %></div>
+                            <%});%>
+                        </li>
+                    <% } %>
+                    
+
+                   <% if(locals.look_company.relationships.length > 0 ){ %>
+                        <li class="list-group-item">
+                            <label>Relationships:</label>
+                            <% look_company.relationships.forEach(function(relationship, index){ %>
+                                <div class="panel-body"><%= relationship %></div>
+                            <%});%>
+                        </li>
+                    <% } %>
+
+
+
+                </ul>
+                    
+            </div>
+            
+
+        <% }else{  %>
+            Company not found!<br>
+            No Information to display! Something is Wrong!
+        <% } %>           
+    </div>
+</body>
+
+</html>

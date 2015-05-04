@@ -1,0 +1,49 @@
+<!-- Company Search and Following -->
+<div id="search_following" class="container col-sm-8">
+	<!-- Company Search -->
+	<div id="company_search" class="panel panel-default">
+		<form class="form-inline panel-body" id="company_search_form" action="/users/<%= user.permalink %>/companies/company_search/">
+			<input type="text" placeholder="Enter Company permalink"  class="form-control" name="permalink"/>
+			<button type="submit" class="btn btn-primary round">Search</button>
+		</form>
+		<div class="panel panel-body" >
+			<% if(locals.search_company) {%>
+				<% if(locals.search_company == 'undefined'){%>
+					No Company Found!
+				<%}else{%>
+					<a href="/users/<%=user.permalink%>/companies/<%= search_company %>" ><%= search_company %></a>
+				<%}%>
+			<% } %>
+		</div>
+	</div>
+
+	<!-- Company Search END-->
+
+
+	<!-- Companies user is following-->
+	<div id="companies_following" class="panel panel-primary">
+		<div class="panel-heading">
+			Following Companies:
+		</div>
+		<% user.companies_following.forEach(function(company_permalink, index ){%>
+		<div class="panel-body">
+			<a href="/users/<%=user.permalink%>/companies/<%= company_permalink %>"><%= company_permalink%></a>
+			</div>
+		<%});%>
+	</div>
+	<!-- Users following the current company END-->
+</div>
+<!-- Company Search and Following END -->
+
+<!-- Recommend Users -->
+<div id="recommend_user" class="container col-sm-4">
+	<div id="following_users" class="panel panel-primary">
+		<div class="panel-heading">
+			Recommended Users:
+		</div>
+		<div class="panel-body">
+		</div>
+
+	</div>
+</div>
+<!-- Recommend Users END -->

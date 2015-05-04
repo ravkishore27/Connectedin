@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Home</title>
+    <link rel="stylesheet" href="/stylesheets/profile.css">
+    <% include ../partials/head.ejs %>
+</head>
+
+<body>
+    <%if(locals.user){%>
+    <% include ../user_partials/user_header.ejs %>
+    <% include ../user_partials/user_nav.ejs %>
+    <%};if(locals.company){ %>
+    <% include ../company_partials/company_header.ejs %>
+    <% include ../company_partials/company_nav.ejs %>
+    <% } %>
+
+    <div class="container content">
+        <% if (locals.job) {%>
+            <div class="panel panel-primary">
+                <!-- Panel Heading -->
+                <div class="panel-heading">
+                    <% if(locals.job.title ){ %>
+                        <h3 class="panel-title"><%= job.company_name %>: <%= job.title %></h3>
+                    <% } %>
+                </div>
+
+                <!-- Panel Body -->
+                <div class="panel-body">
+                    <p> 
+                        <% if(locals.job.title ){ %>
+                            <label>Title:</label> <%= job.title %>
+                        <% } %>
+                        <br>
+                        <% if(locals.job.description ){ %>
+                            <label>Description:</label> <%= job.description %>
+                        <% } %>
+
+                        <% if(!locals.company){ %>
+                            <% if(user.jobs_applied.indexOf(job.job_id) == -1) {%>
+                                <form action="/users/<%=user.permalink%>/jobs/<%=job.job_id%>/apply">
+                                    <button class="btn btn-primary pull-right">Apply</button>      
+                                </form>
+                            <% }else{ %>
+                                <form action="/users/<%=user.permalink%>/jobs/<%=job.job_id%>/withdraw">
+                                    <button class="btn btn-primary pull-right"> Withdraw</button>       
+                                </form>
+                            <%}%>
+                        <% } %>
+                    </p>
+                </div>
+
+                <!-- job details List group -->
+                <ul class="list-group">
+                    
+
+                    <li class="list-group-item">
+                        <% if(locals.job.company_permalink ){ %>
+                            <label>Company:</label> <%= job.company_permalink %>
+                        <% } %>
+                    </li>
+
+                    <li class="list-group-item">
+                    <% if(locals.job.company_name ){ %>
+                            <label>Company Name:</label> <%= job.company_name %>
+                        <% } %>
+                    </li>
+
+                    <li class="list-group-item">
+                    <% if(locals.job.expiry_date ){ %>
+                            <label>Expiry Date:</label> <%= job.expiry_date.toLocaleDateString("en-US") %>
+                        <% } %>
+                    </li>
+
+                    <% if(locals.job.skills.length > 0 ){ %>
+                        <li class="list-group-item">
+                            <label>Skills:</label>
+                            <% job.skills.forEach(function(skill, index){ %>
+                                <div class="panel panel-body"><%= index+1 %>.&nbsp;<%= skill %></div>
+                            <%});%>
+                        </li>
+                    <% } %>
+
+                    <li class="list-group-item">
+                        <% if(locals.job.recruiter_name ){ %>
+                            <label>Recruiter Name:</label> <%= job.recruiter_name %>
+                        <% } %>
+                    </li>
+
+                    
+                    <% if(locals.job.locations.length > 0 ){ %>
+                        <li class="list-group-item">
+                            <label>Locations:</label>
+                            <% job.locations.forEach(function(location, index){ %>
+                                <div class="panel panel-body"><%= index+1 %>.&nbsp;<%= location %></div>
+                            <%});%>
+                        </li>
+                    <% } %>
+
+                      <% if(locals.job.users_applied.length > 0 ){ %>
+                        <li class="list-group-item">
+                            <label>Applied Users:</label>
+                            <% job.users_applied.forEach(function(permalink, index){ %>
+                                <div class="panel-body"><%= index+1 %>.&nbsp;<%= permalink %></div>
+                            <%});%>
+                        </li>
+                    <% } %>
+                </ul>
+                    
+            </div>
+            
+
+        <% }else{  %>
+            job not found!<br>
+            No Information to display! Something is Wrong!
+        <% } %>           
+    </div>
+</body>
+
+<footer>
+    <% include ../partials/footer.ejs %>
+</footer>
+
+</html>

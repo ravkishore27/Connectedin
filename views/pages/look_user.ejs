@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Users Connection</title>
+	<link rel="stylesheet" href="/stylesheets/profile.css">
+	<link rel="stylesheet" href="/stylesheets/edit_user_edit_profile.css">
+	<% include ../partials/head.ejs %>
+</head>
+
+<body>
+	<%if(locals.user){%>
+	<% include ../user_partials/user_header.ejs %>
+	<% include ../user_partials/user_nav.ejs %>
+	<%};if(locals.company){ %>
+	<% include ../company_partials/company_header.ejs %>
+	<% include ../company_partials/company_nav.ejs %>
+	<% } %>
+
+	<div class="container content">
+		<% if (locals.look_user) {%>
+			<div class="panel panel-primary">
+				<!-- Panel Heading -->
+				<div class="panel-heading">
+					<% if(locals.look_user.first_name ){ %>
+						<h3 class="panel-title "><%= look_user.first_name %>'<span></span> Profile</h3>
+						
+					<% } %>
+				</div>
+
+				<div class="panel-body	">
+					<% if(locals.look_user.permalink ){ %>
+						<label for="permalink">Permalink:</label>
+						<span id="permalink"> <%= look_user.permalink %></span>
+						<% if(!locals.company){ %>
+							<% if(user.permalink != look_user.permalink) {%>
+								<% if(user.users_following.indexOf(look_user.permalink) == -1) {%>
+									<form action="/users/<%=user.permalink%>/users/<%=look_user.permalink%>/follow">
+										<button class="btn btn-primary pull-right">Follow</button>		
+									</form>
+								<% }else{ %>
+									<form action="/users/<%=user.permalink%>/users/<%=look_user.permalink%>/unfollow">
+										<button class="btn btn-primary pull-right"> Unfollow</button>		
+									</form>
+								<%}%>
+							<% } %>
+						<% } %>
+					<%}%>
+				</div>
+
+				<!-- Panel Body -->
+				<div class="panel-body">
+					<p> 
+						<% if(locals.look_user.status ){ %>
+							<strong>Status:</strong> <%= look_user.status %>
+						<% } %>
+						
+						<% if(locals.look_user.overview ){ %>
+							<strong>Overview:</strong> <%= look_user.overview %>
+						<% } %>
+					</p>
+				</div>
+
+				<!-- look_user details List group -->
+			 	<ul class="list-group">
+					<li class="list-group-item">
+						<% if(locals.look_user.first_name ){ %>
+							<strong>Firstname:</strong> <%= look_user.first_name %>
+						<% } %>
+					</li>
+				   	<li class="list-group-item">
+				   		<% if(locals.look_user.last_name ){ %>
+							<strong>Lastname:</strong> <%= look_user.last_name %>
+						<% } %>
+				   	</li>
+				    <li class="list-group-item">
+				    	<% if(locals.look_user.email ){ %>
+							<strong>Email:</strong> <%= look_user.email %>
+						<% } %>
+				    </li>
+				   
+			    	<% if(locals.look_user.blog_urls.length > 0 ){ %>
+			    		<li class="list-group-item">
+							<label>Blog:</label>
+							<% look_user.blog_urls.forEach(function(blog, index){ %>
+								<div class="panel panel-body"><%= index+1 %>.&nbsp;<%= blog %></div>
+							<%});%>
+						</li>
+					<% } %>
+
+					<% if(locals.look_user.skills.length > 0 ){ %>
+			    		<li class="list-group-item">
+							<label>Skills:</label>
+							<% look_user.skills.forEach(function(skill, index){ %>
+								<div class="panel panel-body"><%= index+1 %>.&nbsp;<%= skill %></div>
+							<%});%>
+						</li>
+					<% } %>
+
+					<% if(locals.look_user.degrees.length > 0 ){ %>
+			    		<li class="list-group-item">
+							<label>Degrees:</label>
+							<% look_user.degrees.forEach(function(degree, index){ %>
+								<div class="panel panel-body">
+									<div class="col-sm-4">
+									<label class="col-sm-5"><%= index+1 %>.&nbsp;Degree Type: </label><%= degree.degree_type %>
+									</div>
+									<div class="col-sm-8">
+									<label class="col-sm-2">Subject: </label><%= degree.subject %>
+									</div>
+									<br>
+									<div class='col-sm-8'>									
+									<label class="col-sm-2">Institution: </label><%= degree.institution %>
+									</div>
+									
+									<div class='col-sm-4'>
+									<label class="col-sm-2">Date: </label><%= degree.graduated_month %>/<%= degree.graduated_day %>/<%= degree.graduated_year %>
+									</div>
+								</div>
+							<%});%>
+						</li>
+					<% } %>
+				    
+				   <% if(locals.look_user.certificates.length > 0 ){ %>
+			    		<li class="list-group-item">
+							<label>Certificates:</label>
+							<% look_user.certificates.forEach(function(certificate, index){ %>
+								<div class="panel panel-body"><%= certificate %></div>
+							<%});%>
+						</li>
+					<% } %>
+
+				   <% if(locals.look_user.locations.length > 0 ){ %>
+			    		<li class="list-group-item">
+							<label>Locations:</label>
+							<% look_user.locations.forEach(function(location, index){ %>
+							<div class="panel-body">
+								<div class="col-sm-12">
+									<label class="col-sm-1"><%= index+1 %>.&nbsp;City: </label><%= location.name %>
+								</div>
+								<div class="col-sm-6">
+									<label class="col-sm-2">From: </label><%= location.from %>
+								</div>
+								<div class="col-sm-6">
+									<label class="col-sm-2">To: </label><%= location.to = typeof location.to == 'undefined'? 'Present' : location.to %>
+								</div>
+							</div>
+
+							<%});%>
+						</li>
+					<% } %>
+
+				     <% if(locals.look_user.companies_following.length > 0 ){ %>
+			    		<li class="list-group-item">
+							<label>Companies Following:</label>
+							<% look_user.companies_following.forEach(function(company, index){ %>
+								<div class="panel-body"><%= company %></div>
+							<%});%>
+						</li>
+					<% } %>
+
+					  <% if(locals.look_user.users_following.length > 0 ){ %>
+			    		<li class="list-group-item">
+							<label>Users Following:</label>
+							<% look_user.users_following.forEach(function(permalink, index){ %>
+								<div class="panel-body"><%=index+1%>.&nbsp;<%= permalink %></div>
+							<%});%>
+						</li>
+					<% } %>
+
+					  <% if(locals.look_user.following_users.length > 0 ){ %>
+			    		<li class="list-group-item">
+							<label>Following Users:</label>
+							<% look_user.following_users.forEach(function(permalink, index){ %>
+								<div class="panel-body"><%=index+1%>.&nbsp;<%= permalink %></div>
+							<%});%>
+						</li>
+					<% } %>
+				    
+					<% if(locals.look_user.jobs_applied.length > 0 ){ %>
+			    		<li class="list-group-item">
+							<label>Jobs Applied:</label>
+							<% look_user.jobs_applied.forEach(function(job, index){ %>
+								<div class="panel-body"><%= job.name %></div>
+							<%});%>
+						</li>
+					<% } %>
+
+				   <% if(locals.look_user.relationships.length > 0 ){ %>
+			    		<li class="list-group-item">
+							<label>Relationships:</label>
+							<% look_user.relationships.forEach(function(relationship, index){ %>
+								<div class="panel-body"><%= relationship %></div>
+							<%});%>
+						</li>
+					<% } %>
+
+
+
+				</ul>
+				    
+			</div>
+			
+
+		<% }else{  %>
+			Look User not found!<br>
+			No Information to display! Something is Wrong!
+		<% } %>
+		
+	</div>
+</body>
+
+</html>

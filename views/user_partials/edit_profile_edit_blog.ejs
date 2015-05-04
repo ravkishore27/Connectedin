@@ -1,0 +1,50 @@
+<li class="list-group-item">
+	<strong>Blog:</strong> 
+	<% if(locals.user.blog_urls.length > 0 ){ %>
+		<% user.blog_urls.forEach(function(blog,index){ %>
+			<div class="panel panel-default">
+				<form class="form-inline" action="/users/<%= user.permalink %>/edit_profile/edit_delete_blog">
+					<div>
+					<li class="list-group-item">
+						<input type="hidden" name="index" value=<%= index%> />
+						<label for="edit_blog_name_text"><%= index+1 %>. URL: </label>
+						<span id="edit_blog_url_<%= index %>">
+							  &nbsp;<%=  blog %>
+						</span>
+						<input type="text" placeholder="<%= blog %>" id="edit_blog_name_text_<%= index %>" class="form-control hide" name="edit_blog_url"/>
+						<button id="blog_edit" type="button" class="blog_edit btn btn-warning btn-sm round pull-right" value="<%= index %>">
+							Edit
+						</button>
+						<button id="edit_blog_delete_<%= index %>" type="submit" class="btn btn-danger btn-sm round pull-right" name="blog" value="delete">
+							Delete
+						</button>
+						<button id="edit_blog_submit_<%= index %>" type="submit" class="btn btn-primary btn-sm round pull-right hide" name="blog" value="submit">
+							Submit
+						</button>
+						<button id="edit_blog_cancel" type="button" class="edit_blog_cancel btn btn-warning btn-sm round pull-right hide" value="<%= index %>">
+							Cancel
+						</button>
+					</li>
+					</div>
+				</form>
+			</div>
+		<% }); %>							
+	<%}%>
+	<form class="form-inline" action="/users/<%= user.permalink %>/edit_profile/add_blog">
+		<div class="panel panel-default panel-body">
+			<span id="add_blog_url_span" class="hide">
+				<label for="add_blog_url_text">Blog URL:</label>
+				<input type="text" placeholder="Enter Blog URL" class="form-control" name="add_blog_url"/>
+			</span>
+			<button id="blog_add" type="button" class="btn btn-success btn-sm round pull-right">
+				Add
+			</button>
+			<button id="add_blog_submit" type="submit" class="btn btn-primary btn-sm round pull-right hide">
+				Submit
+			</button>
+			<button id="add_blog_cancel" type="button" class="btn btn-primary btn-sm round pull-right hide">
+				Cancel
+			</button>
+		</div>
+	</form>
+</li>

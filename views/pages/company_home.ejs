@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Home</title>
+    <link rel="stylesheet" href="/stylesheets/profile.css">
+    <% include ../partials/head.ejs %>
+</head>
+
+<body>
+    <% include ../company_partials/company_header.ejs %>
+    <% include ../company_partials/company_nav.ejs %>
+
+    <div class="container content">
+        <% if (locals.company) {%>
+            <div class="panel panel-primary">
+                <!-- Panel Heading -->
+                <div class="panel-heading">
+                    <% if(locals.company.name ){ %>
+                        <h3 class="panel-title">Welcome <%= company.name %></h3>
+                    <% } %>
+                </div>
+
+                <div class="panel-body  ">
+                    <% if(locals.company.permalink ){ %>
+                        <label for="permalink">Permalink:</label>
+                        <span id="permalink"> <%= company.permalink %></span>
+                    <% } %>
+                </div>
+
+                <!-- Panel Body -->
+                <div class="panel-body">
+                    <p> 
+                        <% if(locals.company.description ){ %>
+                            <label>Description:</label> <%= company.description %>
+                        <% } %>
+                        
+                        <% if(locals.company.overview ){ %>
+                            <label>Overview:</label> <%= company.overview %>
+                        <% } %>
+                    </p>
+                </div>
+
+                <!-- company details List group -->
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <% if(locals.company.homepage_url ){ %>
+                            <label>Homepage URL:</label> <%= company.homepage_url %>
+                        <% } %>
+                    </li>
+                    <li class="list-group-item">
+                        <% if(locals.company.number_of_employees ){ %>
+                            <label>Number of Employees:</label> <%= company.number_of_employees %>
+                        <% } %>
+                    </li>
+                    <li class="list-group-item">
+                        <% if(locals.company.email_address ){ %>
+                            <label>Email Address:</label> <%= company.email_address %>
+                        <% } %>
+                    </li>
+
+                    <li class="list-group-item">
+                        <% if(locals.company.founded_year ){ %>
+                            <label>Founded Year:</label> <%= company.founded_year %>
+                        <% } %>
+                    </li>
+
+                    <li class="list-group-item">
+                        <% if(locals.company.founded_month ){ %>
+                            <label>Founded Month:</label> <%= company.founded_month %>
+                        <% } %>
+                    </li>
+
+                    <li class="list-group-item">
+                        <% if(locals.company.founded_day ){ %>
+                            <label>Founded Date:</label> <%= company.founded_day %>
+                        <% } %>
+                    </li>
+                   
+                   <li class="list-group-item">
+                        <% if(locals.company.phone_number ){ %>
+                            <label>Phone Number:</label> <%= company.phone_number %>
+                        <% } %>
+                    </li>
+
+
+                    <% if(locals.company.products.length > 0 ){ %>
+                        <li class="list-group-item">
+                            <label>Blog:</label>
+                            <% company.products.forEach(function(product, index){ %>
+                                <div class="panel panel-body"><%= index+1 %>.&nbsp;<%= product %></div>
+                            <%});%>
+                        </li>
+                    <% } %>
+
+
+                    <% if(locals.company.offices.length > 0 ){ %>
+                        <li class="list-group-item">
+                            <label>Blog:</label>
+                            <% company.offices.forEach(function(office, index){ %>
+                                <div class="panel panel-body"><%= index+1 %>.&nbsp;<%= office %></div>
+                            <%});%>
+                        </li>
+                    <% } %>
+
+                      <% if(locals.company.following_users.length > 0 ){ %>
+                        <li class="list-group-item">
+                            <label>Following Users:</label>
+                            <% company.following_users.forEach(function(permalink, index){ %>
+                                <div class="panel-body"><%= index+1 %>.&nbsp;<%= permalink %></div>
+                            <%});%>
+                        </li>
+                    <% } %>
+                    
+
+                   <% if(locals.company.relationships.length > 0 ){ %>
+                        <li class="list-group-item">
+                            <label>Relationships:</label>
+                            <% company.relationships.forEach(function(relationship, index){ %>
+                                <div class="panel-body"><%= relationship %></div>
+                            <%});%>
+                        </li>
+                    <% } %>
+
+
+
+                </ul>
+                    
+            </div>
+            
+
+        <% }else{  %>
+            company not found!<br>
+            No Information to display! Something is Wrong!
+        <% } %>           
+    </div>
+</body>
+
+<footer>
+    <% include ../partials/footer.ejs %>
+</footer>
+
+</html>

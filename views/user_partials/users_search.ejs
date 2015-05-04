@@ -1,0 +1,64 @@
+<!-- User Search and Followers -->
+<div id="search_followers" class="container col-sm-8">
+	<!-- User Search -->
+	<div id="user_search" class="panel panel-default">
+		<form class="form-inline panel-body" id="user_search_form" action="/users/<%= user.permalink %>/users/user_search/">
+			<input type="text" placeholder="Enter user permalink"  class="form-control" name="permalink"/>
+			<button type="submit" class="btn btn-primary round">Search</button>
+		</form>
+		<div class="panel panel-body" >
+			<% if(locals.search_user) {%>
+				<% if(locals.search_user == 'undefined'){%>
+					No User Found!
+				<%}else{%>
+					<a href="/users/<%=user.permalink%>/users/<%= search_user %>" ><%= search_user %></a>
+				<%}%>
+			<% } %>
+
+		<span id="user_search_form_result">
+		</span>
+		</div>
+	</div>
+
+	<!-- User Search END-->
+
+	<!-- Users being foll0wed by the current user -->
+	<div id="users_following" class="panel panel-primary">
+		<div class="panel-heading">
+			Users Following:
+		</div>
+			<div class="panel-body">
+			<% user.users_following.forEach(function(user_permalink, index ){%>
+				<a href="/users/<%=user.permalink%>/users/<%= user_permalink %>"><%= user_permalink%></a>
+			<%});%>
+		</div>
+	</div>
+	<!-- Users being foll0wed by the current user END-->
+
+	<!-- Users following the current user -->
+	<div id="following_users" class="panel panel-primary">
+		<div class="panel-heading">
+			Following Users:
+		</div>
+		<div class="panel-body">
+			<% user.following_users.forEach(function(user_permalink, index ){%>
+				<a href="/users/<%=user.permalink%>/users/<%= user_permalink %>"><%= user_permalink%></a>
+			<%});%>
+		</div>
+	</div>
+	<!-- Users following the current user END-->
+</div>
+<!-- User Search and Followers END -->
+
+<!-- Recommend Users -->
+<div id="recommend_user" class="container col-sm-4">
+	<div id="following_users" class="panel panel-primary">
+		<div class="panel-heading">
+			Recommended Users:
+		</div>
+		<div class="panel-body">
+		</div>
+
+	</div>
+</div>
+<!-- Recommend Users END -->

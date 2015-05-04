@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Home</title>
+	<link rel="stylesheet" href="/stylesheets/profile.css">
+	<% include ../partials/head.ejs %>
+</head>
+
+<body>
+	<% include ../user_partials/user_header.ejs %>
+	<% include ../user_partials/user_nav.ejs %>
+
+	<div class="container content">
+		<% if (locals.user) {%>
+			<div class="panel panel-primary">
+				<!-- Panel Heading -->
+				<div class="panel-heading">
+					<% if(locals.user.first_name ){ %>
+						<h3 class="panel-title">Welcome <%= user.first_name %></h3>
+					<% } %>
+				</div>
+
+				<div class="panel-body	">
+					<% if(locals.user.permalink ){ %>
+						<label for="permalink">Permalink:</label>
+						<span id="permalink"> <%= user.permalink %></span>
+					<% } %>
+				</div>
+
+				<!-- Panel Body -->
+				<div class="panel-body">
+					<p> 
+						<% if(locals.user.status ){ %>
+							<strong>Status:</strong> <%= user.status %>
+						<% } %>
+						
+						<% if(locals.user.overview ){ %>
+							<strong>Overview:</strong> <%= user.overview %>
+						<% } %>
+					</p>
+				</div>
+
+				<!-- User details List group -->
+			 	<ul class="list-group">
+					<li class="list-group-item">
+						<% if(locals.user.first_name ){ %>
+							<strong>Firstname:</strong> <%= user.first_name %>
+						<% } %>
+					</li>
+				   	<li class="list-group-item">
+				   		<% if(locals.user.last_name ){ %>
+							<strong>Lastname:</strong> <%= user.last_name %>
+						<% } %>
+				   	</li>
+				    <li class="list-group-item">
+				    	<% if(locals.user.email ){ %>
+							<strong>Email:</strong> <%= user.email %>
+						<% } %>
+				    </li>
+				   
+			    	<% if(locals.user.blog_urls.length > 0 ){ %>
+			    		<li class="list-group-item">
+							<label>Blog:</label>
+							<% user.blog_urls.forEach(function(blog, index){ %>
+								<div class="panel panel-body"><%= index+1 %>.&nbsp;<%= blog %></div>
+							<%});%>
+						</li>
+					<% } %>
+
+					<% if(locals.user.skills.length > 0 ){ %>
+			    		<li class="list-group-item">
+							<label>Skills:</label>
+							<% user.skills.forEach(function(skill, index){ %>
+								<div class="panel panel-body"><%= index+1 %>.&nbsp;<%= skill %></div>
+							<%});%>
+						</li>
+					<% } %>
+
+					<% if(locals.user.degrees.length > 0 ){ %>
+			    		<li class="list-group-item">
+							<label>Degrees:</label>
+							<% user.degrees.forEach(function(degree, index){ %>
+								<div class="panel panel-body">
+									<div class="col-sm-4">
+									<label class="col-sm-5"><%= index+1 %>.&nbsp;Degree Type: </label><%= degree.degree_type %>
+									</div>
+									<div class="col-sm-8">
+									<label class="col-sm-2">Subject: </label><%= degree.subject %>
+									</div>
+									<br>
+									<div class='col-sm-8'>									
+									<label class="col-sm-2">Institution: </label><%= degree.institution %>
+									</div>
+									
+									<div class='col-sm-4'>
+									<label class="col-sm-2">Date: </label><%= degree.graduated_month %>/<%= degree.graduated_day %>/<%= degree.graduated_year %>
+									</div>
+								</div>
+							<%});%>
+						</li>
+					<% } %>
+				    
+				   <% if(locals.user.certificates.length > 0 ){ %>
+			    		<li class="list-group-item">
+							<label>Certificates:</label>
+							<% user.certificates.forEach(function(certificate, index){ %>
+								<div class="panel panel-body"><%= certificate %></div>
+							<%});%>
+						</li>
+					<% } %>
+
+				   <% if(locals.user.locations.length > 0 ){ %>
+			    		<li class="list-group-item">
+							<label>Locations:</label>
+							<% user.locations.forEach(function(location, index){ %>
+							<div class="panel-body">
+								<div class="col-sm-12">
+									<label class="col-sm-1"><%= index+1 %>.&nbsp;City: </label><%= location.name %>
+								</div>
+								<div class="col-sm-6">
+									<label class="col-sm-2">From: </label><%= location.from.toLocaleDateString("en-US") %>
+								</div>
+								<div class="col-sm-6">
+									<label class="col-sm-2">To: </label><%= location.to = typeof location.to == 'undefined'? 'Present' : location.to.toLocaleDateString("en-US") %>
+								</div>
+							</div>
+
+							<%});%>
+						</li>
+					<% } %>
+
+				     <% if(locals.user.companies_following.length > 0 ){ %>
+			    		<li class="list-group-item">
+							<label>Companies Following:</label>
+							<% user.companies_following.forEach(function(company, index){ %>
+								<div class="panel-body"><%= company %></div>
+							<%});%>
+						</li>
+					<% } %>
+
+					  <% if(locals.user.users_following.length > 0 ){ %>
+			    		<li class="list-group-item">
+							<label>Users Following:</label>
+							<% user.users_following.forEach(function(permalink, index){ %>
+								<div class="panel-body"><%= index+1 %>.&nbsp;<%= permalink %></div>
+							<%});%>
+						</li>
+					<% } %>
+
+					  <% if(locals.user.following_users.length > 0 ){ %>
+			    		<li class="list-group-item">
+							<label>Following Users:</label>
+							<% user.following_users.forEach(function(permalink, index){ %>
+								<div class="panel-body"><%= index+1 %>.&nbsp;<%= permalink %></div>
+							<%});%>
+						</li>
+					<% } %>
+
+				   <% if(locals.user.relationships.length > 0 ){ %>
+			    		<li class="list-group-item">
+							<label>Relationships:</label>
+							<% user.relationships.forEach(function(relationship, index){ %>
+								<div class="panel-body"><%= relationship %></div>
+							<%});%>
+						</li>
+					<% } %>
+
+
+
+				</ul>
+				    
+			</div>
+			
+
+		<% }else{  %>
+			User not found!<br>
+			No Information to display! Something is Wrong!
+		<% } %>
+		
+	</div>
+</body>
+
+<footer>
+	<% include ../partials/footer.ejs %>
+</footer>
+
+</html>

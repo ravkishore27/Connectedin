@@ -1,0 +1,82 @@
+<li class="list-group-item">
+	<strong>Positions:</strong> 
+	<% if(locals.user.positions.length > 0 ){ %>
+		<% user.positions.forEach(function(position,index){ %>
+			<div class="panel panel-default">
+				<form class="form-inline" action="/users/<%= user.username %>/edit_profile/edit_delete_position">
+					<div>
+					<li class="list-group-item">
+						<input type="hidden" name="index" value=<%= index%> />
+						<div class="form-group">
+							<label> Position Name: </label>
+							<span id="edit_position_name_<%= index %>">
+								 <%=  position.name %>
+							</span>
+							<input type="text" placeholder="<%= position.name %>" id="edit_position_name_text_<%= index %>" class="form-control" name="edit_position_name"/>
+						</div>
+
+						<br><br>
+						<div class="form-group">
+							<label> From: </label>
+							<span id="edit_position_from_<%= index %>">
+								 <%=  position.from.toLocaleDateString("en-US") %>
+							</span>
+							<input type="date" id="edit_position_from_text_<%= index %>" class="form-control" name="edit_position_from"/>
+						</div>
+
+						<div class="form-group">
+							<label> To: </label>
+							<span id="edit_position_to_<%= index %>">
+								 <%= position.to = typeof position.to == 'undefined'? "Present" : position.to.toLocaleDateString("en-US") %>
+							</span>
+							<input type="date" id="edit_position_to_text_<%= index %>" class="form-control" name="edit_position_to"/>
+						</div>
+
+						<button id="position_edit" type="button" class="position_edit btn btn-warning btn-sm round pull-right" value="<%= index %>">
+							Edit
+						</button>
+						<button id="position_delete_<%= index %>" type="submit" class="btn btn-danger btn-sm round pull-right" name="position" value="delete">
+							Delete
+						</button>
+						<button id="edit_position_submit_<%= index %>" type="submit" class="btn btn-primary btn-sm round pull-right" name="position" value="submit">
+							Submit
+						</button>
+					</li>
+					</div>
+				</form>
+			</div>
+		<% }); %>							
+	<%}%>
+	<form class="form-inline" action="/users/<%= user.permalink %>/edit_profile/add_relationship">
+		<div class="panel panel-default panel-body">
+			
+			<div id="add_position_name_text" class="form-group">
+				<label for="add_position">Position Name:</label>
+				<input type="text" placeholder="Enter Position Name"  class=" form-control" id="add_position" name="add_position" required/>
+			</div>
+
+			<br><br>
+			
+			<div id="add_position_from_text" class="form-group" >
+				<label for="add_position_from">From:</label>
+				<input type="date" class="form-control" name="add_position_from" id="add_position_from" required/>
+			</div>
+			
+			<div id="add_position_to_text" class="form-group">
+				<label for="add_position_to">To:</label >
+				<input type="date" class="form-control" name="add_position_to" id="add_position_to" />
+			</div>
+			<div id="add_position_present_text" class="form-group">
+				<label>
+						<input type="checkbox" id="add_position_present_checkbox" name="present" checked> Present
+				</label>
+			</div>			
+			<button id="position_add" type="button" class="btn btn-success btn-sm round pull-right">
+				Add
+			</button>
+			<button id="add_position_submit" type="submit" class="btn btn-primary btn-sm round pull-right">
+				Submit
+			</button>
+		</div>
+	</form>
+</li>

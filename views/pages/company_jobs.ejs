@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Home</title>
+    <link rel="stylesheet" href="/stylesheets/profile.css">
+    <% include ../partials/head.ejs %>
+</head>
+
+<body>
+    <% include ../company_partials/company_header.ejs %>
+    <% include ../company_partials/company_nav.ejs %>
+
+    <div class="container content">
+        <form class="form-inline" action="/company/<%= company.permalink %>/jobs/add_job">
+        <div class="panel panel-default panel-body">
+            <div id="add_degree_div" class="hide">
+            <div id="add_job__title_div" class="form-group">
+                <label for="add_title">Title:</label>
+                <input type="text" placeholder="Enter Job Title "  class=" form-control" id="add_title" name="add_title" required/>
+            </div>
+            <div id="add_description_div" class="form-group" >
+                <label for="add_description">Description:</label>
+                <textarea rows='5' cols="70" placeholder="Enter Description" id="add_description_text" class="form-control" name="add_description"></textarea>
+            </div>
+            <div id="add_location_div" class="form-group" >
+                <label for="add_location">Location:</label>
+                <input type="text" placeholder="Comma seperated locations" class="form-control" name="add_location" id="add_location" />
+            </div>
+            <br><br>
+            <div id="add_expiry_date_div" class="form-group" >
+                <label for="add_expiry_date">Expiry Date:</label>
+                <input type="date" class="form-control" name="add_expiry_date" id="add_expiry_date" />
+            </div>
+            <div id="add_companyname_div" class="form-group" >
+                <label for="add_companyname">Company Name:</label>
+                <input type="text" placeholder="Enter Company Name" class="form-control" name="add_companyname" id="add_companyname" />
+            </div>
+            <div id="add_recruiter_name_div" class="form-group" >
+                <label for="add_recruiter_name">Recruiter Name:</label>
+                <input type="text" placeholder="Enter Recruiter Name" class="form-control" name="add_recruiter_name" id="add_recruiter_name" />
+            </div>
+            <div id="add_skills_div" class="form-group" >
+                <label for="add_skills">Skill:</label>
+                <input type="text" placeholder="Comma Separated Skills" class="form-control" name="add_skills" id="add_skills" />
+            </div>
+            </div>
+            <button id="job_add" type="button" class="btn btn-success btn-sm round pull-right">
+                Add
+            </button>
+            <button id="add_job_submit" type="submit" class="btn btn-primary btn-sm round pull-right hide">
+                Submit
+            </button>
+            <button id="add_job_cancel" type="button" class="add_degree_cancel btn btn-warning btn-sm round pull-right hide">
+                Cancel
+            </button>
+        </div>
+        </form>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                    <% if(locals.company.name ){ %>
+                        <h3 class="panel-title"><%= company.name %> Jobs</h3>
+                    <% } %>
+            </div>
+            <div class="panel-body">
+                <% if(locals.jobs.length > 0 ){ %>
+                    <% jobs.forEach(function(job,index){%>
+                        <%= index+1%>&nbsp;<a href="/company/<%= company.permalink %>/jobs/<%= index%>"><%= job.title %></a>
+                    <%});%>
+                <%}%>
+            </div>
+        </div>
+    </div>
+</body>
+
+<footer>
+    <% include ../partials/footer.ejs %>
+    <script>
+        $(document).ready(function(){
+            var company = <%- JSON.stringify(company) %>;
+
+            $("#job_add").click(function(){
+                $(this).fadeOut('fast',function(){
+                    $("#add_job_cancel").removeClass("hide");
+                    $("#add_job_submit").removeClass("hide");
+                    $("#add_degree_div").removeClass("hide");
+                });
+                
+            });
+
+             $("#add_job_cancel").click(function(){
+
+                $(this).addClass("hide");
+                $("#add_job_submit").addClass("hide");
+                $("#add_degree_div").addClass("hide");
+                $("#job_add").fadeIn('slow');
+            });            
+                
+        
+        });
+        
+
+    </script>
+</footer>
+
+</html>

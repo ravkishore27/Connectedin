@@ -1,0 +1,55 @@
+<!-- Job Search and Postings -->
+<div id="search_jobs" class="container col-sm-8">
+	<!-- Postings Search -->
+	<div id="job_search" class="panel panel-default">
+		<form class="form-inline panel-body" id="job_search_form" action="/users/<%= user.permalink %>/jobs/job_search/">
+			<input type="text" placeholder="Enter Job Title"  class="form-control" name="job_title"/>
+			<button type="submit" class="btn btn-primary round">Search</button>
+		</form>
+		<div class="panel panel-body" >
+			<% if(locals.search_jobs) {%>
+				<% if(locals.search_jobs == 'undefined'){%>
+					No Jobs Found!
+				<%}else{%>
+					<% search_jobs.forEach(function(job, index){%>
+					<div class="panel panel-body" >
+						<label><%=index+1%>. &nbsp;Company:</label> <%= job.company_name %><br>
+						<label>Job Title:</label>
+						<a href="/users/<%=user.permalink%>/jobs/<%= job.job_id %>" >
+							<%= job.title %>
+						</a>
+					</div>
+					<%});%>
+				<%}%>
+			<% } %>
+		</div>
+	</div>
+</div>
+<!-- Company Search and Following END -->
+
+<!-- Applied Jobs -->
+<div id="recommend_user" class="container col-sm-4">
+	<div id="following_users" class="panel panel-primary">
+		<div class="panel-heading">
+			Applied Jobs:
+		</div>
+		<div class="panel-body">
+		<% if(locals.user) {%>
+				<% if(user.jobs_applied.length == 0){%>
+					No Jobs Applied Yet!
+				<%}else{%>
+					<% user.jobs_applied.forEach(function(job_id, index){%>
+					<div class="panel panel-body" >
+						<label><%=index+1%>.</label>
+						<a href="/users/<%=user.permalink%>/jobs/<%= job_id %>" >
+							Job Number#:  &nbsp;<%= job_id %>
+						</a>
+					</div>
+					<%});%>
+				<% } %>
+			<% } %>
+		</div>
+
+	</div>
+</div>
+<!-- Recommend Users END -->

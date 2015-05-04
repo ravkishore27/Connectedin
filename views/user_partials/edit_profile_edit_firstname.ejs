@@ -1,0 +1,18 @@
+<li class="list-group-item">
+	<form class="form-inline" action="/users/<%= user.permalink %>/edit_profile/edit_firstname">
+			<label for="first_name_text">Firstname:</label> 
+			<span id="firstname">
+				<%=  user.first_name = typeof user.first_name == 'undefined' ? '' : user.first_name %>
+			</span>
+			<input type="text" placeholder="<%= user.first_name %>" id="firstname_text" class="form-control hide" name="firstname_edit"/>
+			<button id="firstname_edit" type="button" class="btn btn-warning btn-sm round pull-right">
+				Edit
+			</button>
+			<button id="firstname_submit" type="submit" class="btn btn-primary btn-sm round pull-right hide">
+				Submit
+			</button>
+			<button id="firstname_cancel" type="button" class="btn btn-primary btn-sm round pull-right hide">
+				Cancel
+			</button>
+	</form>
+</li>

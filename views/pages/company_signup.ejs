@@ -1,0 +1,35 @@
+<html>
+<head>
+    <title>User Login</title>
+    <link rel="stylesheet" href="/stylesheets/newstyle.css">
+    <% include ../partials/head.ejs %>
+</head>
+
+<body>
+<div class="container">
+    <div class="login-container">
+            <div id="output"></div>
+            <h3 style="color:#336699;">Company Sign Up</h3>
+            </br>
+             <div class="form-box">
+              <form action="/company_signup" method="post">
+                <label>Company Name<input type="text" placeholder="CompanyName" name="companyname" required></label></br></br>
+                <label>Hompage URL<input type="text" placeholder="HomePage URL" name="homepage_url" required></label></br></br>
+                <label>Email Address<input type="text" placeholder="Email Address" name="email" required></label></br></br>
+                <label>Description<input type="text" placeholder="Description" name="description" required></label></br></br>
+                <label>Password<input type="password" placeholder="Password" name="password" required></label>
+                </br></br>
+                <span><% if (locals.message) {%>
+                    <%= message %>
+                <% } %></span>
+                <button type="submit" class="btn btn-primary btn-md round" >SignUp</button>
+               </form>
+            </div>
+        </div>       
+    </div>
+</body>
+
+<footer>
+    <% include ../partials/footer.ejs %>
+</footer>
+</html>

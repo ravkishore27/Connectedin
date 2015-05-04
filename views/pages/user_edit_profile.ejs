@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Edit Profile</title>
+	<link rel="stylesheet" href="/stylesheets/profile.css">
+	<link rel="stylesheet" href="/stylesheets/edit_user_edit_profile.css">
+	<% include ../partials/head.ejs %>
+</head>
+
+<body>
+	<% include ../user_partials/user_header.ejs %>
+	<% include ../user_partials/user_nav.ejs %>
+
+
+
+	<div class="container content">
+		<% if (locals.user) {%>
+			<div class="panel panel-primary">
+				<!-- Panel Heading -->
+				<div class="panel-heading">
+					<% if(locals.user.first_name ){ %>
+						<h3 class="panel-title">Welcome <%= user.first_name %></h3>
+					<% } %>
+				</div>
+
+				<!-- User Details List group for edit purpose -->
+				<ul class="list-group">
+
+					<% include ../user_partials/edit_profile_edit_status.ejs %>
+
+					<% include ../user_partials/edit_profile_edit_overview.ejs %>				
+
+					<% include ../user_partials/edit_profile_edit_firstname.ejs %>
+
+					<% include ../user_partials/edit_profile_edit_lastname.ejs %>
+
+					<% include ../user_partials/edit_profile_edit_blog.ejs %>
+
+					<% include ../user_partials/edit_profile_edit_skill.ejs %>
+
+					<% include ../user_partials/edit_profile_edit_degrees.ejs %>
+
+					<% include ../user_partials/edit_profile_edit_location.ejs %>
+
+					<% include ../user_partials/edit_profile_edit_certificates.ejs %>
+
+				</ul>
+
+
+		<% }else{  %>
+			User not found!<br>
+			No Information to display! Something is Wrong!
+		<% } %>
+		
+	</div>
+</body>
+
+<footer>
+	<% include ../partials/footer.ejs %>
+	<script>
+		$(document).ready(function(){
+			var user = <%- JSON.stringify(user) %>;
+    	});
+	</script>
+	<script src="/javascripts/edit_user_edit_profile.js"></script>
+</footer>
+
+</html>

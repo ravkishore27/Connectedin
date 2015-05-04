@@ -1,0 +1,50 @@
+<li class="list-group-item">
+	<strong>Skills:</strong> 
+	<% if(locals.user.skills.length > 0 ){ %>
+		<% user.skills.forEach(function(skill,index){ %>
+			<div class="panel panel-default ">
+				<form class="form-inline" action="/users/<%= user.permalink %>/edit_profile/edit_delete_skill">
+					<div>
+					<li class="list-group-item">
+						<input type="hidden" name="index" value=<%= index%> />
+						<label> Name: </label>
+						<span id="edit_skill_<%= index %>">
+							 <%=  skill %>
+						</span>
+						<input type="text" placeholder="<%= skill %>" id="edit_skill_text_<%= index %>" class="form-control hide" name="edit_skill"/>
+						<button id="skill_edit" type="button" class="skill_edit btn btn-warning btn-sm round pull-right" value="<%= index %>">
+							Edit
+						</button>
+						<button id="edit_skill_delete_<%= index %>" type="submit" class="btn btn-danger btn-sm round pull-right" name="skill" value="delete">
+							Delete
+						</button>
+						<button id="edit_skill_submit_<%= index %>" type="submit" class="btn btn-primary btn-sm round pull-right hide" name="skill" value="submit">
+							Submit
+						</button>
+						<button id="edit_skill_cancel" type="button" class="edit_skill_cancel btn btn-warning btn-sm round pull-right hide" value="<%= index %>">
+							Cancel
+						</button>
+					</li>
+					</div>
+				</form>
+			</div>
+		<% }); %>							
+	<%}%>
+	<form class="form-inline" action="/users/<%= user.permalink %>/edit_profile/add_skills">
+		<div class="panel panel-default panel-body">
+			<span id="add_skill_span" class="hide">
+				<label>Skill Name:</label>
+				<input type="text" placeholder="Enter Skill Name"  class="form-control" name="add_skill"/>
+			</span>
+			<button id="skill_add" type="button" class="btn btn-success btn-sm round pull-right">
+				Add
+			</button>
+			<button id="add_skill_submit" type="submit" class="btn btn-primary btn-sm round pull-right hide">
+				Submit
+			</button>
+			<button id="add_skill_cancel" type="button" class="btn btn-warning btn-sm round pull-right hide">
+				Cancel
+			</button>
+		</div>
+	</form>
+</li>

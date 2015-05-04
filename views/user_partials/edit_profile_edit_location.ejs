@@ -1,0 +1,86 @@
+<li class="list-group-item">
+	<strong>Locations:</strong> 
+	<% if(locals.user.locations.length > 0 ){ %>
+		<% user.locations.forEach(function(location,index){ %>
+			<div class="panel panel-default">
+				<form class="form-inline" action="/users/<%= user.permalink %>/edit_profile/edit_delete_location">
+					<div>
+					<li class="list-group-item">
+						<input type="hidden" name="index" value=<%= index%> />
+						<div class="form-group">
+							<label> City Name: </label>
+							<span id="edit_location_name_<%= index %>">
+								 <%=  location.name = typeof location.name == 'undefined'? "" : location.name %>
+							</span>
+							<input type="text" placeholder="<%= location.name %>" id="edit_location_name_text_<%= index %>" class="form-control hide" name="edit_location_name"/>
+						</div>
+
+						<br><br>
+						<div class="form-group">
+							<label> From: </label>
+							<span id="edit_location_from_<%= index %>">
+								 <%=  location.from.toLocaleDateString("en-US") %>
+							</span>
+							<input type="date" id="edit_location_from_text_<%= index %>" class="form-control hide" name="edit_location_from"/>
+						</div>
+
+						<div class="form-group">
+							<label> To: </label>
+							<span id="edit_location_to_<%= index %>">
+								 <%= location.to = typeof location.to == 'undefined'? "Present" : location.to.toLocaleDateString("en-US") %>
+							</span>
+							<input type="date" id="edit_location_to_text_<%= index %>" class="form-control hide" name="edit_location_to"/>
+						</div>
+
+						<button id="location_edit" type="button" class="location_edit btn btn-warning btn-sm round pull-right" value="<%= index %>">
+							Edit
+						</button>
+						<button id="location_delete_<%= index %>" type="submit" class="btn btn-danger btn-sm round pull-right" name="location" value="delete">
+							Delete
+						</button>
+						<button id="edit_location_submit_<%= index %>" type="submit" class="btn btn-primary btn-sm round pull-right hide" name="location" value="submit">
+							Submit
+						</button>
+						<button id="edit_location_cancel" type="button" class=" edit_location_cancel btn btn-warning btn-sm round pull-right hide" value="<%= index %>">
+							Cancel
+						</button>
+					</li>
+					</div>
+				</form>
+			</div>
+		<% }); %>							
+	<%}%>
+	<form class="form-inline" action="/users/<%= user.permalink %>/edit_profile/add_location">
+		<div class="panel panel-default panel-body">
+			<div id="add_location_div" class="hide">
+				<div id="add_location_name_div" class="form-group">
+					<label for="add_location_name">City Name:</label>
+					<input type="text" placeholder="Enter City Name"  class=" form-control" id="add_location_name" name="add_location_name" required/>
+				</div>
+				<br><br>
+				<div id="add_location_from_text" class="form-group" >
+					<label for="add_location_from">From:</label>
+					<input type="date" class="form-control" name="add_location_from" id="add_location_from" required/>
+				</div>
+				<div id="add_location_to_text" class="form-group hide">
+					<label for="add_location_to">To:</label >
+					<input type="date" class="form-control" name="add_location_to" id="add_location_to" />
+				</div>
+				<div id="add_location_present_text" class="form-group">
+					<label>
+							<input type="checkbox" id="add_location_present_checkbox" name="present" checked> Present
+					</label>
+				</div>			
+			</div>
+			<button id="location_add" type="button" class="btn btn-success btn-sm round pull-right">
+				Add
+			</button>
+			<button id="add_location_submit" type="submit" class="btn btn-primary btn-sm round pull-right hide">
+				Submit
+			</button>
+			<button id="add_location_cancel" type="button" class="btn btn-warning btn-sm round pull-right hide">
+				Cancel
+			</button>
+		</div>
+	</form>
+</li>

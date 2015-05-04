@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Connectedin</title>
+	<link rel="stylesheet" href="/stylesheets/newstyle.css">
+	<% include ../partials/head.ejs %>
+	<script type="text/javascript">
+		function signup(){
+			if(document.getElementById('loginType').checked === true ){
+				window.location = "user_signup";
+			}else{
+				window.location = 'company_signup';
+			}
+		}
+	</script>
+</head>
+
+<body>
+	<div class="container">
+		<div class="login-container">
+            <div id="output"></div>
+            <div class="avatar"></div>
+            <div class="form-box">
+                <form action="/login" method="post">
+                     <input type="text" placeholder="Username" name="username" required>
+                     <input type="password" placeholder="Password" name="password"  required>
+                    <!-- <input class="btn btn-default" type="submit" value="Login">-->
+                    <div class="wrapper">
+                       <span class="group-btn">     
+                      		<button type="submit" class="btn btn-primary btn-md round">
+                      			login
+                      			<i class="fa fa-sign-in"></i>
+                      		</button>
+                        </span>
+                    </div>
+                    </br>
+                    <label class="radio-inline control-label"><input type="radio" name="loginType" id="loginType" value="user" checked >User</label>
+                    <label class="radio-inline control-label"><input type="radio" name="loginType" value="company" >Company</label>
+                    </br></br></br>
+                    <button type="button" class="btn btn-primary btn-md round" onclick="signup()">SignUp</button>
+                    <br><br>
+                    <span><% if (locals.message) {%>
+						<%= message %>
+					<% } %></span>
+                  </form>
+            </div>
+        </div>       
+	</div>
+
+<!--
+	<form action="/login" method="post">
+		username: <input type="text" id="username" name="username" />
+		password : <input type="password" id="password" name="password" />
+		<label class="radio-inline control-label">
+			<input id="loginType" name="loginType" value="user" type="radio" checked>User
+		</label>
+		<label class="radio-inline control-label">
+			<input id="loginType" name="loginType" value="company" type="radio">Company
+		</label>
+		<button type="submit">Login</button>
+	</form>
+	<br>
+		<% if (locals.message) {%>
+		<%= message %>
+		<% } %>
+-->
+</body>
+
+<footer>
+	<% include ../partials/footer.ejs %>
+</footer>
+
+</html>

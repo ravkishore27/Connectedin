@@ -1,0 +1,20 @@
+<li class="list-group-item">
+	<form class="form-inline" action="/users/<%= user.permalink %>/edit_profile/edit_status" >
+		<label for="status_text">
+			Status:
+		</label>
+		<span id="status">
+			<%=  user.status = typeof user.status == 'undefined' ? '' : user.status %>
+		</span>	
+		<input type="text" placeholder="<%= user.status %>" id="status_text" class="form-control hide" name="status_edit" />	
+		<button id="status_edit" type="button" class="btn btn-warning btn-sm round pull-right ">
+			Edit
+		</button>
+		<button id="status_submit" type="submit" class="btn btn-primary btn-sm round pull-right hide">
+			Submit
+		</button>
+		<button id="status_cancel" type="button" class="btn btn-primary btn-sm round pull-right hide">
+				Cancel
+		</button>
+	</form>
+</li>
