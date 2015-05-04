@@ -24,31 +24,46 @@
 			<% } %>
 		</div>
 	</div>
+
+	<div id="recommend_user">
+		<div id="following_users" class="panel panel-primary">
+			<div class="panel-heading">
+				Applied Jobs:
+			</div>
+			<div class="panel-body">
+			<% if(locals.user) {%>
+					<% if(user.jobs_applied.length == 0){%>
+						No Jobs Applied Yet!
+					<%}else{%>
+						<% user.jobs_applied.forEach(function(job_id, index){%>
+						<div class="panel panel-body" >
+							<label><%=index+1%>.</label>
+							<a href="/users/<%=user.permalink%>/jobs/<%= job_id %>" >
+								Job Number#:  &nbsp;<%= job_id %>
+							</a>
+						</div>
+						<%});%>
+					<% } %>
+				<% } %>
+			</div>
+		</div>
+	</div>
 </div>
 <!-- Company Search and Following END -->
 
-<!-- Applied Jobs -->
+<!-- Recommend Users -->
 <div id="recommend_user" class="container col-sm-4">
 	<div id="following_users" class="panel panel-primary">
 		<div class="panel-heading">
-			Applied Jobs:
+			Recommended Skills:
 		</div>
+		<% if(locals.rec_item){%>
+		<% rec_item.item_rec.forEach(function(recommendation, index ){%>
 		<div class="panel-body">
-		<% if(locals.user) {%>
-				<% if(user.jobs_applied.length == 0){%>
-					No Jobs Applied Yet!
-				<%}else{%>
-					<% user.jobs_applied.forEach(function(job_id, index){%>
-					<div class="panel panel-body" >
-						<label><%=index+1%>.</label>
-						<a href="/users/<%=user.permalink%>/jobs/<%= job_id %>" >
-							Job Number#:  &nbsp;<%= job_id %>
-						</a>
-					</div>
-					<%});%>
-				<% } %>
-			<% } %>
+				<%= recommendation %>
 		</div>
+		<%});%>
+		<%}%>
 
 	</div>
 </div>

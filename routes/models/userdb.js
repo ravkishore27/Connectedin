@@ -1,12 +1,11 @@
 var mongoose = require('./connectdb');
 var Schema = mongoose.Schema;
 
-
-var auto_increment = require('mongoose-auto-increment');
-var connection = mongoose.createConnection('mongodb://'+process.env.MONGOLAB_USERNAME+':'+process.env.MONGOLAB_PASSWORD+'@ds031862.mongolab.com:31862/cmpe282project');
-auto_increment.initialize(connection);
-var connection = mongoose.connection;
-auto_increment.initialize(connection);
+// var auto_increment = require('mongoose-auto-increment');
+// var connection = mongoose.createConnection('mongodb://'+process.env.MONGOLAB_USERNAME+':'+process.env.MONGOLAB_PASSWORD+'@ds031862.mongolab.com:31862/cmpe282project');
+// auto_increment.initialize(connection);
+// var connection = mongoose.connection;
+// auto_increment.initialize(connection);
 
 var userSchema = new Schema({
   first_name          : String,
@@ -186,11 +185,10 @@ userSchema.methods.removeUsers_following = function (follow_user){
 userSchema.methods.addUsers_following = function (follow_user){
   this.users_following.push(follow_user.permalink);
   follow_user.following_users.push(this.permalink); 
+  console.log(follow_user);
   follow_user.save(function (err, saved_user){
       if(err){
         console.log(err);
-        req.session.message(err);
-        res.redirect('/error');
       }
   }); 
 };
@@ -272,6 +270,6 @@ userSchema.methods.addJobs_applied = function (applied_job){
 
 
 //--------------------------------------------------------------------------
-userSchema.plugin(auto_increment.plugin, 'user');
+//userSchema.plugin(auto_increment.plugin, 'user');
 
-module.exports = mongoose.model('user',userSchema, 'users');
+module.exports = mongoose.model('user',userSchema, 'usersjson');

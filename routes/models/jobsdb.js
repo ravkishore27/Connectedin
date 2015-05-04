@@ -2,11 +2,11 @@ var mongoose = require('./connectdb');
 var Schema = mongoose.Schema;
 
 
-var auto_increment = require('mongoose-auto-increment');
-var connection = mongoose.createConnection('mongodb://'+process.env.MONGOLAB_USERNAME+':'+process.env.MONGOLAB_PASSWORD+'@ds031862.mongolab.com:31862/cmpe282project');
-auto_increment.initialize(connection);
-var connection = mongoose.connection;
-auto_increment.initialize(connection);
+// var auto_increment = require('mongoose-auto-increment');
+// var connection = mongoose.createConnection('mongodb://'+process.env.MONGOLAB_USERNAME+':'+process.env.MONGOLAB_PASSWORD+'@ds031862.mongolab.com:31862/cmpe282project');
+// auto_increment.initialize(connection);
+// var connection = mongoose.connection;
+// auto_increment.initialize(connection);
 
 var jobSchema = new Schema({
   title               : String,
@@ -26,6 +26,6 @@ var jobSchema = new Schema({
 });
 
 
-jobSchema.plugin(auto_increment.plugin, 'job');
+//jobSchema.plugin(auto_increment.plugin, 'job');
 
 module.exports = mongoose.model('job', jobSchema, 'jobs');

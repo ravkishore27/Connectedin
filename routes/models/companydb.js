@@ -2,11 +2,11 @@ var mongoose = require('./connectdb');
 var Schema = mongoose.Schema;
 
 
-var auto_increment = require('mongoose-auto-increment');
-var connection = mongoose.createConnection('mongodb://'+process.env.MONGOLAB_USERNAME+':'+process.env.MONGOLAB_PASSWORD+'@ds031862.mongolab.com:31862/cmpe282project');
-auto_increment.initialize(connection);
-var connection = mongoose.connection;
-auto_increment.initialize(connection);
+// var auto_increment = require('mongoose-auto-increment');
+// var connection = mongoose.createConnection('mongodb://'+process.env.MONGOLAB_USERNAME+':'+process.env.MONGOLAB_PASSWORD+'@ds031862.mongolab.com:31862/cmpe282project');
+// auto_increment.initialize(connection);
+// var connection = mongoose.connection;
+// auto_increment.initialize(connection);
 
 var companySchema = new Schema({
   name                : String,
@@ -36,6 +36,6 @@ var companySchema = new Schema({
   permalink           : String
 });
 
-companySchema.plugin(auto_increment.plugin, 'company');
+//companySchema.plugin(auto_increment.plugin, 'company');
 
-module.exports = mongoose.model('company', companySchema, 'companies');
+module.exports = mongoose.model('company', companySchema, 'companyjson');

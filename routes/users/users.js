@@ -3,7 +3,10 @@ var router = express.Router();
 var user = require('../models/userdb');
 var company = require('../models/companydb');
 var jobs = require('../models/jobsdb');
-
+var user_user_recommendation = require('../models/user_user_recommendation');
+var user_company_recommendation = require("../models/user_company_recommendation");
+var user_item_recommendation = require("../models/user_item_recommendation");
+var userCareerRecommendation = require("../models/careerpath");
 
 
 
@@ -19,6 +22,7 @@ function getUser(req, res, next){
 			console.log(err);
 			req.session.message = "Look on console ";
 		}else if(current_user != null){
+			//console.log(current_user);
 			req.session.user = current_user;
 		}else{
 			//console.log("users.js-getUser");
@@ -28,6 +32,91 @@ function getUser(req, res, next){
 	});
 };
 
+
+/* GET Recommended Users */
+function getRecommonendedUsers(req, res, next){
+	user_user_recommendation.findOne({ "user" : req.params.permalink }, function(err, rec_user){
+		if(err){
+			console.log(err);
+			req.session.message = "Look on console ";
+		}else if(rec_user != null){
+			req.session.rec_user = rec_user;
+		}else{
+			console.log("users.js-getrecUser");
+			req.session.message = "user returned is null";
+		}
+		next();
+	});
+};
+
+/* GET req.session.rec_users */
+function getSessionRecommendedUsers(req){
+	var current_rec_user = null;
+	if(req.session.rec_user){
+		current_rec_user = req.session.rec_user;
+		req.session.rec_user = null;
+	}
+	//console.log(current_rec_user);
+	return current_rec_user;
+}
+
+
+/* GET Recommended Companies */
+function getUserCompanyRecommendation(req, res, next){
+	user_company_recommendation.findOne({ "user" : req.params.permalink }, function(err, rec_company){
+		if(err){
+			console.log(err);
+			req.session.message = "Look on console ";
+		}else if(rec_company != null){
+			req.session.rec_company = rec_company;
+		}else{
+			console.log("users.js-getrecUser");
+			req.session.message = "user returned is null";
+		}
+		next();
+	});
+};
+
+/* GET req.session.rec_companies */
+function getSessionRecommendedCompanies(req){
+	var current_rec_company = null;
+	if(req.session.rec_company){
+		current_rec_company = req.session.rec_company;
+		req.session.rec_company = null;
+	}
+	//console.log(current_rec_company);
+	return current_rec_company;
+}
+
+
+
+/* GET Recommended Skills */
+function getuserItemRecommendation(req, res, next){
+	user_item_recommendation.findOne({ "user" : req.params.permalink }, function(err, rec_item){
+		if(err){
+			console.log(err);
+			req.session.message = "Look on console ";
+		}else if(rec_item != null){
+			//console.log(rec_item);
+			req.session.rec_item = rec_item;
+		}else{
+			console.log("users.js-getrecUser");
+			req.session.message = "user returned is null";
+		}
+		next();
+	});
+};
+
+/* GET req.session.rec_skills */
+function getSessionRecommendedItems(req){
+	var current_rec_item = null;
+	if(req.session.rec_item){
+		current_rec_item = req.session.rec_item;
+		req.session.rec_item = null;
+	}
+	//console.log(current_rec_item);
+	return current_rec_item;
+}
 
 
 /* GET req.session.message */
@@ -144,10 +233,10 @@ function get_look_company(req, res, next){
 			console.log(err);
 			req.session.message = "Look on console ";
 		}else if(current_company != null){
-			console.log(current_company);
+			//console.log(current_company);
 			req.session.look_company = current_company;
 		}else{
-			console.log("users.js-get_look_company");
+			//console.log("users.js-get_look_company");
 			req.session.message = "user returned is null";
 		}
 		next();
@@ -272,10 +361,12 @@ var user_users = function(req, res, next) {
 	if(req.session.message){
 	 	res.redirect('/error');
 	}else{
-		res.status(200).render('user_users', { user : getSessionUser(req) });
+		//console.log(req.session.rec_user);
+		//console.log(req.session.user);
+		res.status(200).render('user_users', { user : getSessionUser(req), rec_user : getSessionRecommendedUsers(req) });
 	}
 };
-router.get('/:permalink/users', getUser, user_users);
+router.get('/:permalink/users', getUser, getRecommonendedUsers, user_users);
 
 
 /*------------------------------------------------------------------------------*/
@@ -286,10 +377,11 @@ var user_company = function(req, res, next) {
 	if(req.session.message){
 	 	res.redirect('/error');
 	}else{
-		res.status(200).render('user_company', { user : getSessionUser(req)});
+		console.log(req.session.rec_company);
+		res.status(200).render('user_company', { user : getSessionUser(req), rec_company : getSessionRecommendedCompanies(req)});
 	}
 };
-router.get('/:permalink/companies', getUser, user_company);
+router.get('/:permalink/companies', getUser,getUserCompanyRecommendation, user_company);
 /*------------------------------------------------------------------------------*/
 
 
@@ -299,13 +391,25 @@ var user_jobs = function(req, res, next) {
 	if(req.session.message){
 	 	res.redirect('/error');
 	}else{
-		res.status(200).render('user_jobs', { user : getSessionUser(req)});
+		console.log(req.session.rec_item);
+		res.status(200).render('user_jobs', { user : getSessionUser(req), rec_item : getSessionRecommendedItems(req) });
 	}
 };
-router.get('/:permalink/jobs', getUser, user_jobs);
+router.get('/:permalink/jobs', getUser, getuserItemRecommendation, user_jobs);
 /*------------------------------------------------------------------------------*/
 
 
+/* GET Career Path Page. */
+var careerPath = function(req, res, next) {
+	//console.log(req.session.message);
+	if(req.session.message){
+	 	res.redirect('/error');
+	}else{
+		res.status(200).render('user_careerpath', { user : getSessionUser(req)});
+	}
+};
+router.get('/:permalink/careerPath', getUser, careerPath);
+/*------------------------------------------------------------------------------*/
 
 /* GET edit_profile Page. */
 var edit_profile = function(req, res, next) {
@@ -356,11 +460,11 @@ var search_user = function(req, res, next) {
 	if(req.session.message){
 	 	res.redirect('/error');
 	}else{
-		console.log(req.session.search_user);
-		res.status(200).render('user_users', { user : getSessionUser(req), search_user : getSearchUser(req) });
+		//console.log(req.session.search_user);
+		res.status(200).render('user_users', { user : getSessionUser(req), search_user : getSearchUser(req), rec_user : getSessionRecommendedUsers(req) });
 	}
 };
-router.get("/:permalink/users/user_search/", findUser, getUser, search_user);
+router.get("/:permalink/users/user_search/", findUser, getUser, getRecommonendedUsers, search_user);
 
 
 
@@ -370,7 +474,7 @@ var look_user = function(req, res, next) {
 	if(req.session.message){
 	 	res.redirect('/error');
 	}else{
-		console.log(req.session.search_user);
+		//console.log(req.session.search_user);
 		res.status(200).render('look_user', { user : getSessionUser(req), look_user : getSessionLookUser(req) });
 	}
 };
@@ -385,6 +489,7 @@ var follow_user = function(req, res, next) {
 		var current_user = req.session.user;
 		var current_look_user = req.session.look_user;
 		current_user.addUsers_following(current_look_user);
+		//console.log(current_user);
 		current_user.save(function (err, saved_user){
 			if(err){
 				console.log(err);
@@ -457,11 +562,11 @@ var search_company = function(req, res, next) {
 	if(req.session.message){
 	 	res.redirect('/error');
 	}else{
-		console.log(req.session.search_company);
-		res.status(200).render('user_company', { user : getSessionUser(req), search_company : getSearchCompany(req) });
+		//console.log(req.session.rec_company);
+		res.status(200).render('user_company', { user : getSessionUser(req), search_company : getSearchCompany(req), rec_company : getSessionRecommendedCompanies(req)});
 	}
 };
-router.get("/:permalink/companies/company_search/", findCompany, getUser, search_company);
+router.get("/:permalink/companies/company_search/", findCompany, getUser, getUserCompanyRecommendation, search_company);
 
 
 /*------------------- Search User Functionality See Company------------------- */
@@ -486,7 +591,7 @@ var follow_company = function(req, res, next) {
 		var current_look_comany = req.session.look_company;
 		//console.log(current_look_comany);
 		current_user.addCompanies_following(current_look_comany);
-		console.log(current_user);
+		//console.log(current_user);
 		current_user.save(function (err, saved_user){
 			if(err){
 				console.log(err);
@@ -554,10 +659,10 @@ var search_jobs = function(req, res, next) {
 	 	res.redirect('/error');
 	}else{
 		//console.log(req.session.search_jobs);
-		res.status(200).render('user_jobs', { user : getSessionUser(req), search_jobs : getSearchJobs(req) });
+		res.status(200).render('user_jobs', { user : getSessionUser(req), search_jobs : getSearchJobs(req), rec_item: getSessionRecommendedItems });
 	}
 };
-router.get("/:permalink/jobs/job_search/", findJobs, getUser, search_jobs);
+router.get("/:permalink/jobs/job_search/", findJobs, getUser,getuserItemRecommendation, search_jobs);
 
 
 
@@ -637,6 +742,47 @@ router.get("/:permalink/jobs/:look_job_id/withdraw", get_look_job, getUser, with
 /*------------------------------------------------------------------------------*/
 /*---------------------USER - USERS JOBS CALLS END------------------------------*/
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*----------------------------CAREER SEARCH PAGE CALLS-------------------------*/
+/*------------------------------------------------------------------------------*/
+/*------------------------------------------------------------------------------*/
+
+var search_career_path = function(req, res, next) {
+	var x;
+	userCareerRecommendation.findOne({"position" : req.query.career_title}, function(err,current_career_path){
+		if(err){
+			console.log("error in users.js-career_search");
+			console.log(err);
+			res.send(err);
+		}
+
+		if(current_career_path == null){
+			current_career_path = "undefined";
+		}
+		res.status(200).render('user_careerpath',{user : getSessionUser(req),  career_path : current_career_path});
+	});
+};
+router.get("/:permalink/careerPath/career_search/", getUser, search_career_path);
+/*------------------------------------------------------------------------------*/
+/*------------------------------------------------------------------------------*/
+/*--------------------- CAREER CAREER CALLS END------------------------------*/
 
 
 

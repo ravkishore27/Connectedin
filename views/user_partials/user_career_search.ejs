@@ -1,0 +1,30 @@
+<!-- Career Search -->
+<div id="search_career_path" class="container col-sm-8">
+	<!-- Postings Search -->
+	<div id="career_search" class="panel panel-default">
+		<form class="form-horizontal panel-body" id="career_search_form" action="/users/<%= user.permalink %>/careerPath/career_search/">
+			<input type="text" placeholder="Enter Career Title"  class="form-control" name="career_title"/>
+			<br>
+			<div class="col-sm-3"></div>
+			<button type="submit" class="btn btn-primary col-sm-6 round">Search</button>
+		</form>
+	</div>
+	<div class="col-sm-4"></div>
+	<div id="career_path_result" class="col-sm-4">
+		<div id="following_users" class="panel panel-primary">
+			<div class="panel-heading">
+				Career Path:
+			</div>
+			<div class="panel-body">
+			<% if(locals.career_path) {%>
+					<% career_path.recommendation.forEach(function(recommendation, index){%>
+					<div class="panel panel-body" >
+						<%= recommendation %>
+					</div>
+					<%});%>
+				<% } %>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Company Search and Following END -->

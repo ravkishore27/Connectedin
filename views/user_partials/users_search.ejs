@@ -56,8 +56,15 @@
 		<div class="panel-heading">
 			Recommended Users:
 		</div>
+		<% if(locals.rec_user){%>
+		<% rec_user.recommendation.forEach(function(recommendation, index ){%>
 		<div class="panel-body">
+			<a href="/users/<%=user.permalink%>/users/<%= recommendation %>">
+				<%= recommendation %>
+			</a>
 		</div>
+		<%});%>
+		<%}%>
 
 	</div>
 </div>
